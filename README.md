@@ -1,78 +1,79 @@
-# React + TypeScript + Vite
+# Frontend Mentor – Grid landing page solution
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive landing page for "Bridge Collective", a fictional education charity, built for a [Frontend Mentor](https://www.frontendmentor.io) challenge.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### The challenge
 
-## React Compiler
+Users should be able to:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- View the optimal layout for the page depending on their device's screen size
+- See hover states on the stat cards
+- Open and close the navigation menu from the header
+- Use the menu with a keyboard and screen reader
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+### Screenshots
 
-## Expanding the ESLint configuration
+| Desktop | Mobile |
+| --- | --- |
+| ![Desktop design](./design/desktop-design.jpg) | ![Mobile design](./design/mobile-design.jpg) |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Menu open (desktop) | Menu open (mobile) |
+| --- | --- |
+| ![Desktop menu open](./design/active-states-menu-open.jpg) | ![Mobile menu open](./design/active-states-menu-open-mobile.jpg) |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Built with
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- [React 19](https://react.dev) + TypeScript
+- [Vite](https://vite.dev) with the React Compiler
+- Semantic HTML5 and plain CSS (custom properties, native nesting)
+- CSS Grid and Flexbox
+- Mobile-first workflow
+- [Inter](https://rsms.me/inter/) variable font, self-hosted
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting started
 
+```bash
+npm install
+npm run dev      # start the dev server
+npm run build    # type-check and build to dist/
+npm run preview  # serve the production build
+npm run lint     # run ESLint
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project structure
 
 ```
+src/
+├── App.tsx                 # page layout and menu open/close state
+├── App.css                 # component and layout styles (BEM)
+├── index.css               # @font-face, design tokens, reset
+├── stats.ts                # typed stat card data
+├── components/
+│   ├── NavMenu.tsx         # navigation panel and dimmed overlay
+│   └── StatCard.tsx        # single stat card
+└── assets/                 # SVG icons
+public/
+└── fonts/inter/            # Inter variable font and its license
+```
+
+## What I learned
+
+**Divider lines with `gap: 1px`.** The stats list's background is set to the divider color, and each card has the page background. The 1px grid gap shows through as a line between cards, and it works the same for one, two or four columns, so no border rules are needed.
+
+**Aligning an overlay with grid columns.** On desktop the page is a three-column grid (`1.64fr 1fr 1fr`). The nav menu and overlay are placed in that same grid, so the menu panel lines up exactly with the last column of cards without hard-coded widths.
+
+**Variable fonts need a weight range.** In `@font-face`, `font-weight` declares which weights the file contains. With `normal`, the browser treats the file as weight 400 only and can't render lighter weights. Declaring the range `100 900` unlocks every weight.
+
+**An accessible menu toggle:**
+
+- `aria-expanded` and `aria-controls` on the toggle button
+- focus moves to the first link on open and back to the toggle on close
+- Escape or a click on the overlay closes the menu
+- `inert` on the content and footer keeps keyboard focus out of the dimmed page
+- animations are disabled when the user prefers reduced motion
+
+## Author
+
+- Ulugbek Nazarov
