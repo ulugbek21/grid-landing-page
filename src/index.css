@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/inter-variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --blue-700: #2854FE;
+  --blue-600: #325CFF;
+  --blue-400: #4784FF;
+  --blue-200: #C1CEFF;
+
+  --color-divider: var(--blue-400);
+  --color-text-soft: rgb(255 255 255 / 0.85);
+  --color-overlay: rgb(0 0 0 / 0.25);
+
+  --gutter: 24px;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --gutter: 48px;
+  }
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* ---------- Base ---------- */
+body {
+  background: var(--blue-700);
+  color: white;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}

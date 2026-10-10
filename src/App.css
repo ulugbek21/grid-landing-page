@@ -1,0 +1,290 @@
+/* ---------- Page layout ----------
+   Mobile: one column, three rows (header / content / footer).
+   Desktop: three columns (hero, card, card). The nav menu and overlay
+   are placed into the same grid so the panel lines up with the last column. */
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+}
+
+.site-header,
+.content,
+.site-footer {
+  grid-column: 1 / -1;
+}
+
+.site-header {
+  grid-row: 1;
+}
+
+.content {
+  grid-row: 2;
+}
+
+.site-footer {
+  grid-row: 3;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  padding-inline: var(--gutter);
+  border-bottom: 1px solid var(--color-divider);
+  background: var(--blue-700);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: inherit;
+  text-decoration: none;
+
+  &::before {
+    content: '';
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}
+
+.menu-toggle {
+  display: grid;
+  place-items: center;
+  margin-right: -8px;
+  padding: 8px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 56px 32px 60px;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.hero__title {
+  max-width: 11ch;
+  font-size: clamp(2.75rem, 1.9rem + 3.6vw, 4rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.hero__text {
+  max-width: 24rem;
+  margin-top: 24px;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--color-text-soft);
+}
+
+/* ---------- Stats ----------
+   The 1px gap shows the list's background through it, which draws
+   the divider lines between cards in any column count. */
+.stats {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--color-divider);
+  list-style: none;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 328px;
+  padding: 24px;
+  background: var(--blue-700);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: var(--blue-600);
+  }
+}
+
+.stat-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.stat-card__icon {
+  margin-top: 4px;
+}
+
+.stat-card__value {
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-card__label {
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+
+.stat-card__description {
+  margin-top: 2px;
+  font-size: 0.875rem;
+  color: var(--color-text-soft);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  padding: 24px var(--gutter);
+  border-top: 1px solid var(--color-divider);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+/* ---------- Nav menu ---------- */
+.nav-overlay {
+  grid-column: 1 / -1;
+  grid-row: 2 / -1;
+  z-index: 1;
+  background: var(--color-overlay);
+  animation: fade-in 0.2s ease;
+}
+
+.nav-menu {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  align-self: start;
+  z-index: 2;
+  padding: 48px var(--gutter);
+  background: var(--blue-700);
+  text-align: center;
+  animation: slide-down 0.25s ease;
+}
+
+.nav-menu__list {
+  list-style: none;
+}
+
+.nav-menu__link {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.03em;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+}
+
+/* ---------- Tablet: hero on top, 2×2 cards ---------- */
+@media (min-width: 40rem) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+/* ---------- Desktop: hero left, 2×2 cards right ---------- */
+@media (min-width: 64rem) {
+  .page {
+    grid-template-columns: minmax(0, 1.64fr) repeat(2, minmax(0, 1fr));
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px var(--gutter);
+    border-bottom: 0;
+    border-right: 1px solid var(--color-divider);
+  }
+
+  .hero__title {
+    max-width: 6.4em;
+  }
+
+  .hero__text {
+    margin-top: 40px;
+  }
+
+  .stats {
+    grid-column: 2 / -1;
+  }
+
+  .stat-card {
+    padding: 32px;
+  }
+
+  .site-footer {
+    height: 72px;
+    padding-block: 0;
+  }
+
+  .nav-menu {
+    grid-column: -2 / -1;
+    grid-row: 2 / -1;
+    align-self: stretch;
+    padding: 56px var(--gutter);
+    text-align: right;
+    animation-name: slide-in;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
